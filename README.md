@@ -63,6 +63,7 @@ Server is presently set to UTC so no changes are necessary.
 e. Change the SSH port from 22 to 2200. Ensure that SSH access via port 2200 is set in */etc/ssh/sshd_config*.
 
 >`# What ports, IPs and protocols we listen for`
+
 >`Port 2200`
 
 (you may wish to have PasswordAccess while performing these operations in case there is a timing error!)
