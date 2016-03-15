@@ -14,30 +14,35 @@ Sources and information used for each step in this README file are included afte
 ### Basic Linux Configuration
 
 1. Launch the machine as provded per Udacity and remote login as root user.
-2. Create a new user *grader* with password
- ```adduser grader```
-   Add grader as a SUDOER user by adding a file *grader* within the directory /etc/sudoers.d
- ```touch grader```
+2. Create a new user *grader* with password.
+ >`adduser grader`
+   Add grader as a SUDOER user by adding a file *grader* within the directory /etc/sudoers.d.
+ >`touch grader`
    Generate new public and private keys for user *grader* remotely using command:
- ```ssh keygen```
+ >`ssh keygen`
+
 Then place the public key on the linux server under ~/.ssh as file *authorized_keys*.
 Reset ssh access using the following:
- ```sudo service ssh restart```
+ >`sudo service ssh restart`
 
 Subsequent access is by private/public key access only including a passphrase for added security.
 Disable password access for ALL accounts by changing the /etc/ssh/sshd_config file to the following:
- ```PasswordAuthentication no```
+ >`PasswordAuthentication no`
+ 
 3. Update all packages using the following commands:
- ```sudo apt-get update```
- ```sudo apt-get upgrade```
+ >`sudo apt-get update`
+ >`sudo apt-get upgrade`
+
 Add packages that automatically monitor for updates:
-```sudo apt-get install unattended-upgrades```
-```sudo dpkg-reconfigure --priority=low unattended-upgrades```
+>`sudo apt-get install unattended-upgrades`
+>``sudo dpkg-reconfigure --priority=low unattended-upgrades`
+
 These packages can alert the administrator of necessary upgrades via email.
 Install application *sendmail* in anticipation of mail access via server.
+(note: email functionality has not been fully implemented on this server)
 
 4. Configure system to have a local timezone of UTC
-```tzconfig```
+>`tzconfig`
 Server is presently set to UTC so no changes are necessary.
 
 ### Securing the server
