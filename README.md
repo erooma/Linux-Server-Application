@@ -13,12 +13,17 @@ Sources and information used for each step in this README file are included afte
 
 ### Basic Linux Configuration
 
-1. Launch the machine as provded per Udacity and remote login as root user.
-2. Create a new user *grader* with password.
+a. Launch the machine as provded per Udacity and remote login as root user.
+
+b. Create a new user *grader* with password.
+ 
  >`adduser grader`
-   Add grader as a SUDOER user by adding a file *grader* within the directory /etc/sudoers.d.
+ 
+Add grader as a SUDOER user by adding a file *grader* within the directory /etc/sudoers.d.
+   
  >`touch grader`
-   Generate new public and private keys for user *grader* remotely using command:
+ 
+Generate new public and private keys for user *grader* remotely using command:
  >`ssh keygen`
 
 Then place the public key on the linux server under ~/.ssh as file *authorized_keys*.
@@ -31,7 +36,8 @@ Disable password access for ALL accounts by changing the /etc/ssh/sshd_config fi
 
  >`PasswordAuthentication no`
  
-3. Update all packages using the following commands:
+c. Update all packages using the following commands:
+
  >`sudo apt-get update`
 
  >`sudo apt-get upgrade`
@@ -39,67 +45,54 @@ Disable password access for ALL accounts by changing the /etc/ssh/sshd_config fi
 Add packages that automatically monitor for updates:
 
 >`sudo apt-get install unattended-upgrades`
+
 >`sudo dpkg-reconfigure --priority=low unattended-upgrades`
 
 These packages can alert the administrator of necessary upgrades via email.
 Install application *sendmail* in anticipation of mail access via server.
 (note: email functionality has not been fully implemented on this server)
 
-4. Configure system to have a local timezone of UTC
+d. Configure system to have a local timezone of UTC
 
 >`tzconfig`
+
 Server is presently set to UTC so no changes are necessary.
 
 ### Securing the server
 
 
+e. Change the SSH port from 22 to 2200
 
-The information that can be added for a puppy includes its name, gender,
-date of birth, weight (in lbs), special needs and a single image or photo 
-(maximum 2 Mbytes) of the puppy in question (this is not obligatory).
+f. Configure the Uncomplicated Firewall (UFW) to only allow incoming connections
+for SSH (port 2200), HTTP (port 80), and NTP (port 123)
 
-### Mid-level operations
 
-Users with more advanced admin privileges have the ability to edit, remove and
-transfer all puppies from within the shelters. These users are also allowed to
-edit shelter information (address, website, capacity, etc) or add new shelters.
-Shelters cannot be filled beyond capacity.
+### Install the application
 
-### Highest level users
+g. Install and configure Apache to serve a Python mod_wsgi application
 
-Users with the highest administration privilegs can see a list of all users in
-the system in addition to their adopted puppies.
+h. Install and configure PostgreSQL:
+   i. Do not allow remote connections
+   ii. Create a new user named catalog that has limited permissions to your catalog application database
+   
+i. Install git, clone and set up your Catalog App project (from your GitHub
+repository from earlier in the Nanodegree program) so that it functions correctly
+when visiting your server’s IP address in a browser. Remember to set this up
+appropriately so that your .git directory is not publicly accessible via a browser!
 
-Choices from all  menus will change depending on the user privileges.
+j. Reconfiguration of third-party authentication (eg: changes on Google Developer's Console to reflect 
 
-The presence of a *demonstration* option on the main screen
-for a user to temporarily change his/her administrator privileges. 
-This is for evaluation purposes only, and allows the evaluator to see the 
-changes available at each administration level.
+### Additional features
 
-### Data options
+The following features have been added to enhance security and functionality.
+1.
+2.
 
-Within the drop down menus are choices for the user to download data of
-either shelters, or puppies within a selected shelter, by means of JSON or
-XML coding.
 
 ### Known issues
 
-Please note that full user administration (deletion, password reminders etc)
-has not been implemented in this version, in part because of the use of the
-OAuth2 Google log-in.
+The use of Postgresql has a known issue - inability to have a table named *User* without expressly using quotation marks at every occurrence. The AdoptUsDogs application was therefore re-coded to implement a table *Client* instead of User when manipulating data.
 
-This version contains demonstration puppies with images, shelters and
-users for evaluation purposes. No similarities with real shelters, dogs, or 
-users is implied or intended. All images have been obtained royalty-free.
-
-### Requirements
-
-The application is run from the file: runserver.py and uses localhost: 5000 on
-a virtual server.
-
-The client_secrets file from Google developers console has not been included
-for security purposes.
 
 This application is coded in python and uses the frameworks Flask, 
 http://flask.pocoo.org/, and the extensions FlaskWTF, 
