@@ -88,13 +88,13 @@ g. Consider addition of additional protection to monitor for repeated unsuccessf
 
 >`sudo cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local` to copy the local config file
 
->`set bantime  = 1800
+>`set bantime  = 1800`
 
-  destemail = admin@SERVER  
+  `destemail = admin@SERVER` 
   
-  action = %(action_mwl)s  
+  `action = %(action_mwl)s`
   
-  change ssh port to = 2220` 
+ `change ssh port to = 2220` 
   
 >`sudo service fail2ban stop`
 
@@ -103,9 +103,11 @@ g. Consider addition of additional protection to monitor for repeated unsuccessf
 
 This package can alert the administrator of necessary upgrades via email.
 
-Install application *sendmail* in anticipation of mail access (note: email functionality has not been fully implemented on this server).
+Install application *sendmail* (or other mail package) in anticipation of mail access.
 
-### Install the application
+note: email functionality has not been fully implemented on this server
+
+### Installing the application
 
 h. Install and configure Apache to serve a Python mod_wsgi application
 
