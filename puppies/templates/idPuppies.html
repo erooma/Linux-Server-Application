@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script type="text/javascript" src="{{ url_for('static', filename='js/jquery-1.11.2.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <title>Puppy list</title>
+    <style>
+    {% for puppy in puppies %}
+    #pup{{puppy.id}} {
+        background-image: url('/static/images/{{puppy.stats.picture}}');
+        background-size: 120px 120px;
+        background-repeat: no-repeat;
+    }
+    {% endfor %}
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#topFixedNavbar1"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
+        <a class="navbar-brand" href="/puppies">AdoptUsDogs</a>
+        </div>
+        <div class="collapse navbar-collapse" id="topFixedNavbar1">
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="{{url_for('gdisconnect')}}">Logout</a></li>
+            </ul>
+     </div>
+      <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container-fluid -->
+</nav>
+  <div class="wrapper">
+<h1>Here are all the puppies in shelter {{shelter}}!</h1>
+<br />
+<div class = 'flash' style="width: 500px;">
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul>
+        {% for message in messages %}
+            <li> <strong> {{ message }} </strong> </li>
+        {% endfor %}
+        </ul>
+        {% endif %}
+    {% endwith %}
+</div>
+
+<h2>Choose from the dropdown menus.</h2><br />
+{% for puppy in puppies %}
+<div class='pup' id='pup{{puppy.id}}'>
+<div class='name'><h4>{{puppy.name}}</h4></div>
+<p>{{puppy.gender}}<br />
+{{puppy.weight}} lbs<br />
+{{puppy.dateOfBirth}}</p>
+<div class='links'>
+    <select onChange="window.location.href=this.value">
+    <option value="">Select:</option>
+    <option value="{{ url_for('adopt', puppy_id=puppy.id) }}">Adopt</option>
+
+    {% if admin >1 or puppy.client_id == client_id %}
+
+     <option value="{{ url_for('editPuppy', puppy_id=puppy.id) }}">Modify</option>
+    <option value="{{ url_for('transfer', puppy_id=puppy.id) }}">Transfer</option>
+    <option value="{{ url_for('deletePuppy', puppy_id=puppy.id) }}">Remove</option>
+
+    {% endif %}
+
+    </select>
+</div>
+</div>
+{% endfor %}
+
+<div class='pages'>
+<div class="ellipsis" style="border:none;">Page &nbsp;&nbsp;</div>
+
+{% for page in pagination.iter_pages() %}
+    {% if page %}
+      {% if page != pagination.page %}
+<div class="box"><a href="{{ url_for('idShelters', page=page, shelter=shelter) }}">{{ page }}</a></div>
+      {% else %}
+    <strong class="box" style="border:white; color: #FFFFFF; ">{{ page }}</strong>
+      {% endif %}
+    {% else %}
+    <span class='ellipsis'>…</span>
+    {% endif %}
+  {% endfor %}
+  {% if pagination.has_next %}
+<div class="box2"><a href="{{ url_for('idShelters', page=pagination.page + 1, shelter=shelter)}}">Next &nbsp;&raquo;</a></div>
+  {% endif %}
+</div>
+</div>
+<script>
+$(document).ready(function() {
+     function toggleNavbarMethod() {
+        if ($(window).width() > 768) {
+            $('.navbar .dropdown').on('mouseover', function(){
+                $('.dropdown-toggle', this).trigger('click');
+            }).on('mouseout', function(){
+                $('.dropdown-toggle', this).trigger('click').blur();
+            });
+        }
+        else {
+            $('.navbar .dropdown').off('mouseover').off('mouseout');
+        }
+    }
+    toggleNavbarMethod();
+    $(window).resize(toggleNavbarMethod);
+});
+</script>
+</body>
+</html>

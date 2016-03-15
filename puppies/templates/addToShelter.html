@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script type="text/javascript" src="{{ url_for('static', filename='js/jquery-1.11.2.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <title>Add to shelter</title>
+</head>
+
+<body>
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#topFixedNavbar1"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
+        <a class="navbar-brand" href="/puppies">AdoptUsDogs</a>
+        </div>
+        <div class="collapse navbar-collapse" id="topFixedNavbar1">
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="{{url_for('gdisconnect')}}">Logout</a></li>
+            </ul>
+     </div>
+      <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container-fluid -->
+</nav>
+<div class="wrapper">
+
+<h1>Here are all the shelters.</h1><br />
+
+<div class = 'flash' style="width: 500px;">
+              {% with messages = get_flashed_messages() %}
+      {% if messages %}
+          
+        <ul>
+        {% for message in messages %}
+            <li> <strong> {{ message }} </strong> </li>
+        {% endfor %}
+        </ul>
+        {% endif %}
+    {% endwith %}
+
+</div>
+
+<h2>Click on the shelter where you wish to add the puppy.<br />
+You will not be able to add the puppy to a shelter at capacity.</h2><br />
+{% for shelter in shelters %}
+
+<div class='shelter' id='shelter{{shelter.id}}'>
+<a href='/puppies/shelter?shelter_id={{shelter.id}}'><p style="float: right;">Occupancy: {{shelter.occupancy}}<br /> Capacity: {{shelter.capacity}}</p>
+<h4>{{shelter.name}}</h4>
+<p>{{shelter.address}}<br />
+{{shelter.city}}<br />
+{{shelter.state}}<br />
+{{shelter.zipcode}}<br />
+Website: {{shelter.website}}</p>
+</a>
+</div> 
+
+{% endfor %}
+</div>
+
+<script>
+$(document).ready(function() {
+     function toggleNavbarMethod() {
+        if ($(window).width() > 768) {
+            $('.navbar .dropdown').on('mouseover', function(){
+                $('.dropdown-toggle', this).trigger('click');
+            }).on('mouseout', function(){
+                $('.dropdown-toggle', this).trigger('click').blur();
+            });
+        }
+        else {
+            $('.navbar .dropdown').off('mouseover').off('mouseout');
+        }
+    }
+    toggleNavbarMethod();
+    $(window).resize(toggleNavbarMethod);
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script type="text/javascript" src="{{ url_for('static', filename='js/jquery-1.11.2.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <title>Adopted puppies</title>
+<style>
+{% for puppy in puppies %}
+#pup{{puppy.id}} {
+    background-image: url('/static/images/{{puppy.stats.picture}}');
+    background-size: 120px 120px;
+    background-repeat: no-repeat;
+}
+{% endfor %}
+</style>
+</head>
+
+<body>
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#topFixedNavbar1"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
+        <a class="navbar-brand" href="/puppies">AdoptUsDogs</a>
+        </div>
+        <div class="collapse navbar-collapse" id="topFixedNavbar1">
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="{{url_for('gdisconnect')}}">Logout</a></li>
+            </ul>
+     </div>
+      <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container-fluid -->
+</nav>
+<div class="wrapper">
+
+{% if puppies %}
+
+<h1>Here are all the puppies belonging to {{client.name}}!</h1><br />
+
+{% for puppy in puppies %}
+<div class='pup' id='pup{{puppy.id}}'>
+<div class='name'><h4>{{puppy.name}}</h4></div>
+<p>{{puppy.gender}}<br />
+{{puppy.weight}} lbs<br />
+{{puppy.dateOfBirth}}</p>
+</div>
+{% endfor %}
+
+
+
+
+<div class='pages'>
+<div class="ellipsis" style="border:none; color: #FFFFFF;">Page &nbsp;&nbsp;</div>
+
+{% for page in pagination.iter_pages() %}
+    {% if page %}
+      {% if page != pagination.page %}
+<div class="box"><a href="{{ url_for('adoptedPuppies', client_ID=client.id, page=page) }}">{{ page }}</a></div>
+      {% else %}
+    <strong class="box" style="border:none; color: #FFFFFF;">{{ page }}</strong>
+      {% endif %}
+    {% else %}
+    <span class='ellipsis'>…</span>
+    {% endif %}
+  {% endfor %}
+  {% if pagination.has_next %}
+<div class="box2"><a href="{{ url_for('adoptedPuppies', client_ID=client.id, page=pagination.page + 1)}}">Next &nbsp;&raquo;</a></div>
+  {% endif %}
+
+{% else %}
+<h1>There are no puppies belonging to {{client.name}}!</h1><br />
+{% endif %}
+  
+</div>
+</div>
+<script>
+$(document).ready(function() {
+     function toggleNavbarMethod() {
+        if ($(window).width() > 768) {
+            $('.navbar .dropdown').on('mouseover', function(){
+                $('.dropdown-toggle', this).trigger('click');
+            }).on('mouseout', function(){
+                $('.dropdown-toggle', this).trigger('click').blur();
+            });
+        }
+        else {
+            $('.navbar .dropdown').off('mouseover').off('mouseout');
+        }
+    }
+    toggleNavbarMethod();
+    $(window).resize(toggleNavbarMethod);
+});
+</script>
+</body>
+</html>
