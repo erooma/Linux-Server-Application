@@ -88,13 +88,14 @@ g. Consider addition of additional protection to monitor for repeated unsuccessf
 
 >`sudo cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local` to copy the local config file
 
->`set bantime  = 1800`
+Implement the following changes in the configuration file: 
 
-  `destemail = admin@SERVER` 
-  
-  `action = %(action_mwl)s`
-  
- `change ssh port to = 2220` 
+>`set bantime  = 1800`
+>`destemail = admin@SERVER` 
+> `action = %(action_mwl)s`
+>`change ssh port to = 2220` 
+
+Then ensure that the service is running.
   
 >`sudo service fail2ban stop`
 
@@ -106,6 +107,7 @@ This package can alert the administrator of necessary upgrades via email.
 Install application *sendmail* (or other mail package) in anticipation of mail access.
 
 note: email functionality has not been fully implemented on this server
+
 
 ### Installing the application
 
