@@ -32,7 +32,8 @@ Reset ssh access using the following:
  >`sudo service ssh restart`
 
 Subsequent access is by private/public key access only including a passphrase for added security.
-Disable password access for ALL accounts by changing the /etc/ssh/sshd_config file to the following:
+
+Disable password access for ALL accounts by changing the /etc/ssh/sshd_config file as follows:
 
  >`PasswordAuthentication no`
  
