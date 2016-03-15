@@ -49,9 +49,6 @@ Add packages that automatically monitor for updates:
 
 >`sudo dpkg-reconfigure --priority=low unattended-upgrades`
 
-These packages can alert the administrator of necessary upgrades via email.
-Install application *sendmail* in anticipation of mail access via server.
-(note: email functionality has not been fully implemented on this server)
 
 d. Configure system to have a local timezone of UTC
 
@@ -61,33 +58,66 @@ Server is presently set to UTC so no changes are necessary.
 
 ### Securing the server
 
+e. Change the SSH port from 22 to 2200. Ensure that SSH access via port 2200 is set in */etc/ssh/sshd_config*.
 
-e. Change the SSH port from 22 to 2200
+>`# What ports, IPs and protocols we listen for`
+>`Port 2200`
 
-f. Configure the Uncomplicated Firewall (UFW) to only allow incoming connections
-for SSH (port 2200), HTTP (port 80), and NTP (port 123)
+(you may wish to have PasswordAccess while performing these operations in case there is a timing error!)
 
+f. Determine ufw (firewall) status with the following command:
+
+>`ufw status`
+
+Once determining that ufw is disabled, change the ports as required:
+
+>`sudo ufw allow 2200/tcp` for ssh login
+
+>`sudo ufw allow 80/tcp` for HTTP
+
+>`sudo ufw allow 123/udp` for NTP
+
+>`sudo ufw enable` to enable the firewall
+
+g. Consider addition of additional protection to monitor for repeated unsuccessful login attempts and ban attackers.
+
+>`sudo apt-get install fail2ban`
+>`sudo cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local` to copy the local config file
+>`set bantime  = 1800
+  destemail = admin@SERVER  
+  action = %(action_mwl)s  
+  change ssh port to = 2220`  
+>`sudo service fail2ban stop`
+>`sudo service fail2ban start`
+
+
+This package can alert the administrator of necessary upgrades via email.
+Install application *sendmail* in anticipation of mail access via server.
+(note: email functionality has not been fully implemented on this server)
 
 ### Install the application
 
-g. Install and configure Apache to serve a Python mod_wsgi application
+h. Install and configure Apache to serve a Python mod_wsgi application
 
-h. Install and configure PostgreSQL:
+i. Install and configure PostgreSQL:
    i. Do not allow remote connections
    ii. Create a new user named catalog that has limited permissions to your catalog application database
    
-i. Install git, clone and set up your Catalog App project (from your GitHub
+j. Install git, clone and set up your Catalog App project (from your GitHub
 repository from earlier in the Nanodegree program) so that it functions correctly
 when visiting your server’s IP address in a browser. Remember to set this up
 appropriately so that your .git directory is not publicly accessible via a browser!
 
-j. Reconfiguration of third-party authentication (eg: changes on Google Developer's Console to reflect 
+k. Reconfiguration of third-party authentication (eg: changes on Google Developer's Console to reflect 
 
 ### Additional features
 
 The following features have been added to enhance security and functionality.
+
 1.
 2.
+3.
+
 
 
 ### Known issues
