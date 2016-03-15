@@ -1,16 +1,17 @@
-## Catalog application submission/Udacity
-AdoptUsDogs - -- implementation of a catalog system
+## Linux-Server-Application submission
+Linux Server Configuration and Deployment of AdoptUsDogs
 
-23/01/2016 Andrew Moore
+15/03/2016 Andrew Moore
 
-These files create an application that stores information about animal shelters and their canine occupants. Standard users must sign in to the application using their Google account (as a means of offering strict security precautions) and may view, add or adopt puppies as necessary. Administrators have the ability to edit both the occupants of the shelters and the information
-pertaining to the shelters themselves, while higher privileges allow for
-(theoretical) user-management capabilities.
+These files highlight the sequences necessary for basic configuration, secure access, firewall implementation and final deployment of a previously developed catalog application, AdoptUsDogs, on a provided linux server environment.
 
-An API endpoint system is in place to obtain information about both puppies 
-and shelters through either JSON or XML formats.
+Prior instructions for use of the application itself can be found here: [AdoptUsDogs](https://github.com/erooma/Catalog-Application).
 
-### Rudimentary operations
+Please note that this current rendering does NOT include all files sources. In particular, files and packages from the virtual environment on the linux server are not included in this repository.
+
+Sources and information used for each step in this README file are included after each section.
+
+### Initial Linux Configuration
 
 Without signing in, users will be able to see all of the puppies that are 
 available for adoption, but only by signing in (through Google) are they
