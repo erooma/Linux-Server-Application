@@ -11,15 +11,38 @@ Please note that this current rendering does NOT include all files sources. In p
 
 Sources and information used for each step in this README file are included after each section.
 
-### Initial Linux Configuration
+### Basic Linux Configuration
 
-Without signing in, users will be able to see all of the puppies that are 
-available for adoption, but only by signing in (through Google) are they
-allowed to add puppies, adopt puppies, or edit or remove puppies that they
-originally placed into the shelters. Users cannot edit or remove puppies 
-that did not originally belong to them. Users can also see a list of puppies
-that they adopted - these puppies are essentially removed from all shelters
-but their records continue to exist in the database.
+1. Launch the machine as provded per Udacity and remote login as root user.
+2. Create a new user *grader* with password
+ ```adduser grader```
+   Add grader as a SUDOER user by adding a file *grader* within the directory /etc/sudoers.d
+ ```touch grader```
+   Generate new public and private keys for user *grader* remotely using command:
+ ```ssh keygen```
+Then place the public key on the linux server under ~/.ssh as file *authorized_keys*.
+Reset ssh access using the following:
+ ```sudo service ssh restart```
+
+Subsequent access is by private/public key access only including a passphrase for added security.
+Disable password access for ALL accounts by changing the /etc/ssh/sshd_config file to the following:
+ ```PasswordAuthentication no```
+3. Update all packages using the following commands:
+ ```sudo apt-get update```
+ ```sudo apt-get upgrade```
+Add packages that automatically monitor for updates:
+```sudo apt-get install unattended-upgrades```
+```sudo dpkg-reconfigure --priority=low unattended-upgrades```
+These packages can alert the administrator of necessary upgrades via email.
+Install application *sendmail* in anticipation of mail access via server.
+
+4. Configure system to have a local timezone of UTC
+```tzconfig```
+Server is presently set to UTC so no changes are necessary.
+
+### Securing the server
+
+
 
 The information that can be added for a puppy includes its name, gender,
 date of birth, weight (in lbs), special needs and a single image or photo 
