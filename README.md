@@ -26,7 +26,9 @@ Add grader as a SUDOER user by adding a file *grader* within the directory /etc/
 Generate new public and private keys for user *grader* remotely using command:
  >`ssh keygen`
 
-Then place the public key on the linux server under ~/.ssh as file *authorized_keys*.
+Then place the public key on the linux server under (grader-home) ~/.ssh as file *authorized_keys*.
+
+Modify Read/Write permissions as per user *grader* only.
 Reset ssh access using the following:
 
  >`sudo service ssh restart`
