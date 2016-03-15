@@ -85,18 +85,25 @@ Once determining that ufw is disabled, change the ports as required:
 g. Consider addition of additional protection to monitor for repeated unsuccessful login attempts and ban attackers.
 
 >`sudo apt-get install fail2ban`
+
 >`sudo cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local` to copy the local config file
+
 >`set bantime  = 1800
+
   destemail = admin@SERVER  
+  
   action = %(action_mwl)s  
-  change ssh port to = 2220`  
+  
+  change ssh port to = 2220` 
+  
 >`sudo service fail2ban stop`
+
 >`sudo service fail2ban start`
 
 
 This package can alert the administrator of necessary upgrades via email.
-Install application *sendmail* in anticipation of mail access via server.
-(note: email functionality has not been fully implemented on this server)
+
+Install application *sendmail* in anticipation of mail access (note: email functionality has not been fully implemented on this server).
 
 ### Install the application
 
