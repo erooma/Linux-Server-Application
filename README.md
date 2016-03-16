@@ -52,12 +52,14 @@ Add packages that automatically monitor for updates:
 >`sudo dpkg-reconfigure --priority=low unattended-upgrades`
 
 Add a pogram that can be used to monitor your system in real time
+```
 
->`sudo apt-get install python-pip build-essential python-dev`
+>sudo apt-get install python-pip build-essential python-dev
 
->`sudo pip install Glances`
+>sudo pip install Glances
 
->`sudo pip install PySensors`
+>sudo pip install PySensors
+```
 
 d. Configure system to have a local timezone of UTC
 
@@ -91,22 +93,31 @@ Once determining that ufw is disabled, change the ports as required:
 
 g. Consider addition of additional protection to monitor for repeated unsuccessful login attempts and ban attackers.
 
->`sudo apt-get install fail2ban`
+```
+>sudo apt-get install fail2ban
 
->`sudo cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local` to copy the local config file
+>sudo cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local` to copy the local config file
+```
 
 Implement the following changes in the configuration file: 
 
->`set bantime  = 1800`
->`destemail = admin@SERVER` 
->`action = %(action_mwl)s`
->`change ssh port to = 2220` 
+```
+>set bantime  = 1800
+
+>destemail = admin@SERVER
+
+>action = %(action_mwl)s
+
+>change ssh port to = 2220
+```
 
 Then ensure that the service is running.
-  
->`sudo service fail2ban stop`
 
->`sudo service fail2ban start`
+```
+>sudo service fail2ban stop
+
+>sudo service fail2ban start
+```
 
 
 This package can alert the administrator of necessary upgrades via email.
@@ -132,25 +143,29 @@ h. Install and configure Apache to serve a Python mod_wsgi application
 
 In order to remove error message "Could not reliably determine the servers's fully qualified domain name" create an empty Apache config file with the hostname:
 
->`echo "ServerName HOSTNAME"`
->`sudo tee /etc/apache2/conf-available/fqdn.conf`
+```
+>echo "ServerName HOSTNAME"
+>sudo tee /etc/apache2/conf-available/fqdn.conf
+```
 
 >`sudo a2enconf fqdn` to enable new config file
 
 (ii) Begin to prepare for serving a flask app (puppies) through apache2:
 
->`cd /var/www`
->`sudo mkdir puppies`
->`cd puppies`
->`sudo mkdir puppies`
->`cd puppies`
->`sudo mkdir static templates`
+```
+>cd /var/www
+>sudo mkdir puppies
+>cd puppies
+>sudo mkdir puppies
+>cd puppies
+>sudo mkdir static templates
+```
 
 Create the starter python/flask file.
 
 >`sudo nano __init__.py` which contains the following code.
 
->`
+```python
   from flask import Flask  
   app = Flask(__name__)  
   @app.route("/")  
@@ -158,7 +173,8 @@ Create the starter python/flask file.
     return "Hello worlds"  
   if __name__ == "__main__":  
     app.run()  
-`
+```
+ 
 (iii) Install Flask and create the virtual machine
 
 Install pip for python
@@ -167,8 +183,10 @@ Install pip for python
 
 Prepare virtual environment (directory /var/www/puppies/puppies/venv/), and name it 'venv'.
 
->`sudo pip install virtualenv`
->`sudo virtualenv venv`
+```
+>sudo pip install virtualenv
+>sudo virtualenv venv
+```
 
 Enable all permissions from within venv and then activate it.
 
@@ -192,7 +210,8 @@ Create a virtual host config file
 
 Add the following lines of code using PUBLIC-IP-ADDRESS given by Udacity
 
->`  <VirtualHost *:80>
+```python
+    <VirtualHost *:80>
       ServerName PUBLIC-IP-ADDRESS
       ServerAdmin admin@PUBLIC-IP-ADDRESS
       WSGIScriptAlias / /var/www/puppies/puppies.wsgi
@@ -208,7 +227,8 @@ Add the following lines of code using PUBLIC-IP-ADDRESS given by Udacity
       ErrorLog ${APACHE_LOG_DIR}/error.log
       LogLevel warn
       CustomLog ${APACHE_LOG_DIR}/access.log combined
-  </VirtualHost>`
+  </VirtualHost>
+ ```
   
 Enable the virtual host:
 
@@ -222,14 +242,16 @@ Enable the virtual host:
 
 Add the following code to puppies.wsgi
   
- >`#!/usr/bin/python
+  ```
+  #!/usr/bin/python
   import sys
   import logging
   logging.basicConfig(stream=sys.stderr)
   sys.path.insert(0,"/var/www/puppies/")
 
   from puppies import app as application
-  application.secret_key = 'Add your secret key'`
+  application.secret_key = 'Add your secret key'
+  ```
   
   
 (vi) Restart Apache.
