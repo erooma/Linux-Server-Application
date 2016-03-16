@@ -434,6 +434,9 @@ Full login functions when deploying the application required changes to code inc
     h = httplib2.Http()
  ```
 
+(vi) Ensure file paths are correct, as are permissions.
+
+
 Sources:
 
 [Stackoverflow - render .git directory inaccessible](http://stackoverflow.com/questions/6142437/make-git-directory-web-inaccessible)
