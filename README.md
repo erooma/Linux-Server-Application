@@ -42,7 +42,9 @@ Disable password access for ALL accounts by changing the /etc/ssh/sshd_config fi
  
  
  Sources:
+ 
  [Digital Ocean - ssh keygen](https://www.digitalocean.com/community/tutorials/how-to-set-up-ssh-keys--2)
+ 
  [Udacity Configuring Linux WebServers Course](https://www.udacity.com/course/viewer#!/c-ud299-nd/l-4331066009)
  
  
@@ -73,8 +75,11 @@ This program can be started by typing the following at the command line:
 
 
 Sources: 
+
 [Ubuntu apt-get and update/upgrade](https://help.ubuntu.com/lts/serverguide/apt-get.html)
+
 [Ubuntu AutomaticSecurityUpdates](https://help.ubuntu.com/community/AutomaticSecurityU)
+
 [Glances](http://glances.readthedocs.org/en/latest/index.html)
 
 
@@ -149,9 +154,13 @@ note: email functionality has not been fully implemented on this server
 
 
  Sources:
+ 
  [Digital Ocean - firewall](https://www.digitalocean.com/community/tutorials/how-to-set-up-a-firewall-with-ufw-on-ubuntu-14-04)
+ 
  [Digital Ocean - fail2ban](https://www.digitalocean.com/community/tutorials/how-to-protect-ssh-with-fail2ban-on-ubuntu-14-04)
+ 
  [Udacity Configuring Linux WebServers Course](https://www.udacity.com/course/viewer#!/c-ud299-nd/l-4331066009)
+ 
  [Fail2ban](http://www.fail2ban.org/wiki/index.php/Main_Page)
  
 
@@ -318,9 +327,13 @@ Restart Apache.
 >`sudo apt-get install python-psycopg2` install the Python PostgreSQL adapter psycopg
 
 Sources:
+
 [Ubuntu Apache2 server](https://help.ubuntu.com/lts/serverguide/httpd.html)
+
 [Udacity Configuring Linux WebServers Course](https://www.udacity.com/course/viewer#!/c-ud299-nd/l-4331066009)
+
 [Steuken, LinuxServerCOnfiguration from GitHub](https://github.com/stueken/FSND-P5_Linux-Server-Configuration)
+
 [Digital Ocean - Flask app](https://www.digitalocean.com/community/tutorials/how-to-deploy-a-flask-application-on-an-ubuntu-vps)
 
 
@@ -356,6 +369,7 @@ Enter database server as postgres user and create new user named *catalog*
  
 
 Sources:
+
 [Digital Ocean - installing postgresql](https://www.digitalocean.com/community/tutorials/how-to-secure-postgresql-on-an-ubuntu-vps)
 
 
@@ -412,7 +426,9 @@ Full login functions when deploying the application required changes to code inc
  ```
 
 Sources:
+
 [Stackoverflow - render .git directory inaccessible](http://stackoverflow.com/questions/6142437/make-git-directory-web-inaccessible)
+
 [Steuken, LinuxServerCOnfiguration from GitHub](https://github.com/stueken/FSND-P5_Linux-Server-Configuration)
 
 
@@ -422,6 +438,7 @@ Sources:
 The use of Postgresql has a known issue - inability to have a table named *User* without expressly using quotation marks at every occurrence. The AdoptUsDogs application was therefore re-coded to implement a table *Client* instead of User when manipulating data.
 
 Sources:
+
 [Stackoverflow - postgresql/user table](http://stackoverflow.com/questions/22256124/cannot-create-a-database-table-named-user-in-postgresql)
 
 
