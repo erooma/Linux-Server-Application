@@ -120,6 +120,8 @@ note: email functionality has not been fully implemented on this server
 
 h. Install and configure Apache to serve a Python mod_wsgi application
 
+(i) Install Apache2 and components
+
 >`sudo apt-get install apache2`
 
 >`sudo apt-get install python-setuptools libapache2-mod-wsgi` to install wsgi module
@@ -135,6 +137,122 @@ In order to remove error message "Could not reliably determine the servers's ful
 
 >`sudo a2enconf fqdn` to enable new config file
 
+(ii) Begin to prepare for serving a flask app (puppies) through apache2:
+
+>`cd /var/www`
+>`sudo mkdir puppies`
+>`cd puppies`
+>`sudo mkdir puppies`
+>`cd puppies`
+>`sudo mkdir static templates`
+
+Create the starter python/flask file.
+
+>`sudo nano __init__.py` which contains the following code.
+
+>`
+  from flask import Flask  
+  app = Flask(__name__)  
+  @app.route("/")  
+  def hello():  
+    return "Hello worlds"  
+  if __name__ == "__main__":  
+    app.run()  
+`
+(iii) Install Flask and create the virtual machine
+
+Install pip for python
+
+>`sudo apt-get install python-pip`
+
+Prepare virtual environment (directory /var/www/puppies/puppies/venv/), and name it 'venv'.
+
+>`sudo pip install virtualenv`
+>`sudo virtualenv venv`
+
+Enable all permissions from within venv and then activate it.
+
+>`sudo chmod -R 777 venv`
+>`source venv/bin/activate`
+
+From within the virtual environment, install Flask.
+
+>`pip install Flask`
+
+Establish that the app is working (run __init__.py then deavtivate the environment)
+
+>`python __init__.py`
+>`deactivate`
+
+(iv) Create and enable a new virtual host
+
+Create a virtual host config file
+
+>`sudo nano /etc/apache2/sites-available/puppies.conf`
+
+Add the following lines of code using PUBLIC-IP-ADDRESS given by Udacity
+
+>`  <VirtualHost *:80>
+      ServerName PUBLIC-IP-ADDRESS
+      ServerAdmin admin@PUBLIC-IP-ADDRESS
+      WSGIScriptAlias / /var/www/puppies/puppies.wsgi
+      <Directory /var/www/puppies/puppies/>
+          Order allow,deny
+          Allow from all
+      </Directory>
+      Alias /static /var/www/puppies/puppies/static
+      <Directory /var/www/puppies/puppies/static/>
+          Order allow,deny
+          Allow from all
+      </Directory>
+      ErrorLog ${APACHE_LOG_DIR}/error.log
+      LogLevel warn
+      CustomLog ${APACHE_LOG_DIR}/access.log combined
+  </VirtualHost>`
+  
+Enable the virtual host:
+
+>`sudo a2ensite puppies`
+
+
+(v) Create the wsgi file.
+
+>`cd /var/www/puppies`
+>`sudo vim puppies.wsgi`
+
+Add the following code to puppies.wsgi
+  
+ >`#!/usr/bin/python
+  import sys
+  import logging
+  logging.basicConfig(stream=sys.stderr)
+  sys.path.insert(0,"/var/www/puppies/")
+
+  from puppies import app as application
+  application.secret_key = 'Add your secret key'`
+  
+  
+(vi) Restart Apache.
+
+>`sudo service apache2 restart`
+
+
+(vi) Install additional python modules required by the app
+
+Activate virtual environment:
+$ source venv/bin/activate
+Install httplib2 module in venv:
+$ pip install httplib2
+Install requests module in venv:
+$ pip install requests
+*Install flask.ext.seasurf (only seems to work when installed globally):
+$ *sudo pip install flask-seasurf
+Install oauth2client.client:
+$ sudo pip install --upgrade oauth2client
+Install SQLAlchemy:
+$ sudo pip install sqlalchemy
+Install the Python PostgreSQL adapter psycopg:
+$ sudo apt-get install python-psycopg2
 
 
 
