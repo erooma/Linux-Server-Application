@@ -24,6 +24,7 @@ Add grader as a SUDOER user by adding a file *grader* within the directory /etc/
  >`touch grader`
  
 Generate new public and private keys for user *grader* remotely using command:
+
  >`ssh keygen`
 
 Then place the public key on the linux server under (grader-home) ~/.ssh as file *authorized_keys*.
@@ -51,15 +52,14 @@ Add packages that automatically monitor for updates:
 
 >`sudo dpkg-reconfigure --priority=low unattended-upgrades`
 
-Add a pogram that can be used to monitor your system in real time
-```
+Add a program that can be used to monitor your system in real time
 
->sudo apt-get install python-pip build-essential python-dev
+>`sudo apt-get install python-pip build-essential python-dev`
 
->sudo pip install Glances
+>`sudo pip install Glances`
 
->sudo pip install PySensors
-```
+>`sudo pip install PySensors`
+
 
 d. Configure system to have a local timezone of UTC
 
@@ -93,31 +93,31 @@ Once determining that ufw is disabled, change the ports as required:
 
 g. Consider addition of additional protection to monitor for repeated unsuccessful login attempts and ban attackers.
 
-```
->sudo apt-get install fail2ban
 
->sudo cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local` to copy the local config file
-```
+>`sudo apt-get install fail2ban`
+
+>`sudo cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local` to copy the local config file
+
 
 Implement the following changes in the configuration file: 
 
 ```
->set bantime  = 1800
+set bantime  = 1800
 
->destemail = admin@SERVER
+destemail = admin@SERVER
 
->action = %(action_mwl)s
+action = %(action_mwl)s
 
->change ssh port to = 2220
+change ssh port to = 2220
 ```
 
 Then ensure that the service is running.
 
-```
->sudo service fail2ban stop
 
->sudo service fail2ban start
-```
+>`sudo service fail2ban stop`
+
+>`sudo service fail2ban start`
+
 
 
 This package can alert the administrator of necessary upgrades via email.
@@ -143,23 +143,26 @@ h. Install and configure Apache to serve a Python mod_wsgi application
 
 In order to remove error message "Could not reliably determine the servers's fully qualified domain name" create an empty Apache config file with the hostname:
 
-```
->echo "ServerName HOSTNAME"
->sudo tee /etc/apache2/conf-available/fqdn.conf
-```
+>`echo "ServerName HOSTNAME"`
+
+>`sudo tee /etc/apache2/conf-available/fqdn.conf`
 
 >`sudo a2enconf fqdn` to enable new config file
 
 (ii) Begin to prepare for serving a flask app (puppies) through apache2:
 
-```
->cd /var/www
->sudo mkdir puppies
->cd puppies
->sudo mkdir puppies
->cd puppies
->sudo mkdir static templates
-```
+>`cd /var/www`
+
+>`sudo mkdir puppies`
+
+>`cd puppies`
+
+>`sudo mkdir puppies`
+
+>`cd puppies`
+
+>`sudo mkdir static templates`
+
 
 Create the starter python/flask file.
 
@@ -183,14 +186,14 @@ Install pip for python
 
 Prepare virtual environment (directory /var/www/puppies/puppies/venv/), and name it 'venv'.
 
-```
->sudo pip install virtualenv
->sudo virtualenv venv
-```
+>`sudo pip install virtualenv`
+
+>`sudo virtualenv venv`
 
 Enable all permissions from within venv and then activate it.
 
 >`sudo chmod -R 777 venv`
+
 >`source venv/bin/activate`
 
 From within the virtual environment, install Flask.
@@ -200,6 +203,7 @@ From within the virtual environment, install Flask.
 Establish that the app is working (run __init__.py then deavtivate the environment)
 
 >`python __init__.py`
+
 >`deactivate`
 
 (iv) Create and enable a new virtual host
@@ -238,6 +242,7 @@ Enable the virtual host:
 (v) Create the wsgi file.
 
 >`cd /var/www/puppies`
+
 >`sudo vim puppies.wsgi`
 
 Add the following code to puppies.wsgi
@@ -253,29 +258,32 @@ Add the following code to puppies.wsgi
   application.secret_key = 'Add your secret key'
   ```
   
-  
-(vi) Restart Apache.
+Restart Apache.
 
 >`sudo service apache2 restart`
 
 
-(vi) Install additional python modules required by the app
+(vi) Install additional python modules to be required by the app puppies
 
-Activate virtual environment:
-$ source venv/bin/activate
-Install httplib2 module in venv:
-$ pip install httplib2
-Install requests module in venv:
-$ pip install requests
-*Install flask.ext.seasurf (only seems to work when installed globally):
-$ *sudo pip install flask-seasurf
-Install oauth2client.client:
-$ sudo pip install --upgrade oauth2client
-Install SQLAlchemy:
-$ sudo pip install sqlalchemy
-Install the Python PostgreSQL adapter psycopg:
-$ sudo apt-get install python-psycopg2
+>`source venv/bin/activate` activate virtual environment
 
+>`pip install httplib2` install httplib2 module
+
+>`pip install requests` install requests module
+
+>`pip install flask_wtf`
+
+>`pip install wtforms`
+
+>`pip install sqlalchemy`
+
+>`pip install httplib2`
+
+>`pip install werkzeug`
+
+>`pip install oauth2client`
+
+>`sudo apt-get install python-psycopg2` install the Python PostgreSQL adapter psycopg
 
 
 i. Install and configure PostgreSQL:
