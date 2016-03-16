@@ -388,6 +388,7 @@ Sources:
 (iii) Render .git directory inaccessible
 
 Create an *.htaccess* file with the following code `RedirectMatch 404 /\.git`
+(.git directory is now also housed in a backup directory, and not directly as the deployed web server application.)
 
 (iv) Modify application files and settings
 
