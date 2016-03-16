@@ -1,6 +1,6 @@
 from flask import Flask
 
-UPLOAD_FOLDER = 'puppies/static/images/'
+UPLOAD_FOLDER = '/var/www/puppies/puppies/static/images/'
 
 app = Flask(__name__)
 app.config.from_object('config')
