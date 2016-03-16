@@ -51,6 +51,13 @@ Add packages that automatically monitor for updates:
 
 >`sudo dpkg-reconfigure --priority=low unattended-upgrades`
 
+Add a pogram that can be used to monitor your system in real time
+
+>`sudo apt-get install python-pip build-essential python-dev`
+
+>`sudo pip install Glances`
+
+>`sudo pip install PySensors`
 
 d. Configure system to have a local timezone of UTC
 
@@ -92,7 +99,7 @@ Implement the following changes in the configuration file:
 
 >`set bantime  = 1800`
 >`destemail = admin@SERVER` 
-> `action = %(action_mwl)s`
+>`action = %(action_mwl)s`
 >`change ssh port to = 2220` 
 
 Then ensure that the service is running.
@@ -112,6 +119,24 @@ note: email functionality has not been fully implemented on this server
 ### Installing the application
 
 h. Install and configure Apache to serve a Python mod_wsgi application
+
+>`sudo apt-get install apache2`
+
+>`sudo apt-get install python-setuptools libapache2-mod-wsgi` to install wsgi module
+
+>`sudo a2enmod wsgi` to enable wsgi module
+
+>`sudo service apache2 restart` to restart after making (multiple) modifications
+
+In order to remove error message "Could not reliably determine the servers's fully qualified domain name" create an empty Apache config file with the hostname:
+
+>`echo "ServerName HOSTNAME"`
+>`sudo tee /etc/apache2/conf-available/fqdn.conf`
+
+>`sudo a2enconf fqdn` to enable new config file
+
+
+
 
 i. Install and configure PostgreSQL:
    i. Do not allow remote connections
