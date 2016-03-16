@@ -46,6 +46,7 @@ Disable password access for ALL accounts by changing the /etc/ssh/sshd_config fi
  [Udacity Configuring Linux WebServers Course](https://www.udacity.com/course/viewer#!/c-ud299-nd/l-4331066009)
  
  
+ 
 ####c. Update all packages using the following commands:
 
  >`sudo apt-get update`
@@ -77,6 +78,7 @@ Sources:
 [Glances](http://glances.readthedocs.org/en/latest/index.html)
 
 
+
 ####d. Configure system to have a local timezone of UTC
 
 >`tzconfig`
@@ -88,7 +90,9 @@ Sources:
 
 ### Securing the server
 
-####e. Change the SSH port from 22 to 2200. Ensure that SSH access via port 2200 is set in */etc/ssh/sshd_config*.
+####e. Change the SSH port from 22 to 2200.
+
+Ensure that SSH access via port 2200 is set in */etc/ssh/sshd_config*.
 
 >`# What ports, IPs and protocols we listen for`
 
@@ -150,6 +154,7 @@ note: email functionality has not been fully implemented on this server
  [Udacity Configuring Linux WebServers Course](https://www.udacity.com/course/viewer#!/c-ud299-nd/l-4331066009)
  [Fail2ban](http://www.fail2ban.org/wiki/index.php/Main_Page)
  
+
 
 ### Installing the application
 
@@ -319,6 +324,7 @@ Sources:
 [Digital Ocean - Flask app](https://www.digitalocean.com/community/tutorials/how-to-deploy-a-flask-application-on-an-ubuntu-vps)
 
 
+
 ####i. Install and configure PostgreSQL
 
  (i) Installation
@@ -351,6 +357,7 @@ Enter database server as postgres user and create new user named *catalog*
 
 Sources:
 [Digital Ocean - installing postgresql](https://www.digitalocean.com/community/tutorials/how-to-secure-postgresql-on-an-ubuntu-vps)
+
 
 
 ####j. Install git and setup the AdoptUsDogs application
@@ -407,6 +414,7 @@ Full login functions when deploying the application required changes to code inc
 Sources:
 [Stackoverflow - render .git directory inaccessible](http://stackoverflow.com/questions/6142437/make-git-directory-web-inaccessible)
 [Steuken, LinuxServerCOnfiguration from GitHub](https://github.com/stueken/FSND-P5_Linux-Server-Configuration)
+
 
 
 ### Known issues
