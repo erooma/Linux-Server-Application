@@ -91,6 +91,7 @@ Sources:
 Server is presently set to UTC so no changes are necessary.
 
 Sources:
+
 [Ubuntu manuals](http://manpages.ubuntu.com/manpages/dapper/man8/tzconfig.8.html)
 
 ### Securing the server
@@ -332,7 +333,7 @@ Sources:
 
 [Udacity Configuring Linux WebServers Course](https://www.udacity.com/course/viewer#!/c-ud299-nd/l-4331066009)
 
-[Steuken, LinuxServerCOnfiguration from GitHub](https://github.com/stueken/FSND-P5_Linux-Server-Configuration)
+[Steuken, LinuxServerConfiguration from GitHub](https://github.com/stueken/FSND-P5_Linux-Server-Configuration)
 
 [Digital Ocean - Flask app](https://www.digitalocean.com/community/tutorials/how-to-deploy-a-flask-application-on-an-ubuntu-vps)
 
@@ -429,9 +430,9 @@ Sources:
 
 [Stackoverflow - render .git directory inaccessible](http://stackoverflow.com/questions/6142437/make-git-directory-web-inaccessible)
 
-[Steuken, LinuxServerCOnfiguration from GitHub](https://github.com/stueken/FSND-P5_Linux-Server-Configuration)
+[Steuken, LinuxServerConfiguration from GitHub](https://github.com/stueken/FSND-P5_Linux-Server-Configuration)
 
-
+[Stackoverflow - Google+ Login](http://stackoverflow.com/questions/22915461/google-login-server-side-flow-storing-credentials-python-examples)
 
 ### Known issues
 
