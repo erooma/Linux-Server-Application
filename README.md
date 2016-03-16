@@ -1,6 +1,10 @@
 ## Linux-Server-Application submission
 Linux Server Configuration and Deployment of AdoptUsDogs
 
+IP address: 52.37.92.217
+SSH port: 2200
+Web address: http://ec2-52-37-92-217.us-west-2.compute.amazonaws.com
+
 15/03/2016 Andrew Moore
 
 These files highlight the sequences necessary for basic configuration, secure access, firewall implementation and final deployment of a previously developed catalog application, AdoptUsDogs, on a provided linux server environment.
