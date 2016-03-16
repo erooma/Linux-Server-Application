@@ -40,13 +40,19 @@ Disable password access for ALL accounts by changing the /etc/ssh/sshd_config fi
 
  >`PasswordAuthentication no`
  
+ 
+ Sources:
+ [Digital Ocean - ssh keygen](https://www.digitalocean.com/community/tutorials/how-to-set-up-ssh-keys--2)
+ [Udacity Configuring Linux WebServers Course](https://www.udacity.com/course/viewer#!/c-ud299-nd/l-4331066009)
+ 
+ 
 ####c. Update all packages using the following commands:
 
  >`sudo apt-get update`
 
  >`sudo apt-get upgrade`
 
-Add packages that automatically monitor for updates:
+Add packages that automatically monitor for updates (note that automatic reboot has not been enabled)
 
 >`sudo apt-get install unattended-upgrades`
 
@@ -60,12 +66,25 @@ Add a program that can be used to monitor your system in real time
 
 >`sudo pip install PySensors`
 
+This program can be started by typing the following at the command line:
+
+>`glances`
+
+
+Sources: 
+[Ubuntu apt-get and update/upgrade](https://help.ubuntu.com/lts/serverguide/apt-get.html)
+[Ubuntu AutomaticSecurityUpdates](https://help.ubuntu.com/community/AutomaticSecurityU)
+[Glances](http://glances.readthedocs.org/en/latest/index.html)
+
 
 ####d. Configure system to have a local timezone of UTC
 
 >`tzconfig`
 
 Server is presently set to UTC so no changes are necessary.
+
+Sources:
+[Ubuntu manuals](http://manpages.ubuntu.com/manpages/dapper/man8/tzconfig.8.html)
 
 ### Securing the server
 
@@ -124,6 +143,13 @@ Install application *sendmail* (or other mail package) in anticipation of mail a
 
 note: email functionality has not been fully implemented on this server
 
+
+ Sources:
+ [Digital Ocean - firewall](https://www.digitalocean.com/community/tutorials/how-to-set-up-a-firewall-with-ufw-on-ubuntu-14-04)
+ [Digital Ocean - fail2ban](https://www.digitalocean.com/community/tutorials/how-to-protect-ssh-with-fail2ban-on-ubuntu-14-04)
+ [Udacity Configuring Linux WebServers Course](https://www.udacity.com/course/viewer#!/c-ud299-nd/l-4331066009)
+ [Fail2ban](http://www.fail2ban.org/wiki/index.php/Main_Page)
+ 
 
 ### Installing the application
 
@@ -210,13 +236,13 @@ Create a virtual host config file
 
 >`sudo nano /etc/apache2/sites-available/puppies.conf`
 
-Add the following lines of code using PUBLIC-IP-ADDRESS given by Udacity
+Add the following lines of code using PUBLIC-IP-ADDRESS given by Udacity in addition to adding ServerAlias description
 
 ```python
     <VirtualHost *:80>
       ServerName PUBLIC-IP-ADDRESS
       ServerAdmin admin@PUBLIC-IP-ADDRESS
-      ServerAlias ec2-XX-XX-X-XX.us-west-2.compute.amazonaws.com    # necessary for certain oauth2 authentications/*/*
+      ServerAlias ec2-XX-XX-X-XX.us-west-2.compute.amazonaws.com    # necessary for certain oauth2 authentications
       WSGIScriptAlias / /var/www/puppies/puppies.wsgi
       <Directory /var/www/puppies/puppies/>
           Order allow,deny
@@ -237,7 +263,7 @@ Enable the virtual host:
 
 >`sudo a2ensite puppies`
 
-/*/* this line is necessary for oauth2 authentication. Replace X with appropriate server address.
+The ServerAlias description is necessary for oauth2 authentication. Replace X with appropriate server address.
 
 
 (v) Create the wsgi file.
@@ -286,6 +312,12 @@ Restart Apache.
 
 >`sudo apt-get install python-psycopg2` install the Python PostgreSQL adapter psycopg
 
+Sources:
+[Ubuntu Apache2 server](https://help.ubuntu.com/lts/serverguide/httpd.html)
+[Udacity Configuring Linux WebServers Course](https://www.udacity.com/course/viewer#!/c-ud299-nd/l-4331066009)
+[Steuken, LinuxServerCOnfiguration from GitHub](https://github.com/stueken/FSND-P5_Linux-Server-Configuration)
+[Digital Ocean - Flask app](https://www.digitalocean.com/community/tutorials/how-to-deploy-a-flask-application-on-an-ubuntu-vps)
+
 
 ####i. Install and configure PostgreSQL
 
@@ -316,7 +348,11 @@ Enter database server as postgres user and create new user named *catalog*
  
 >`CREATE DATABASE puppyshelter WITH OWNER catalog;` allowing user catalog ownership of application database
  
- 
+
+Sources:
+[Digital Ocean - installing postgresql](https://www.digitalocean.com/community/tutorials/how-to-secure-postgresql-on-an-ubuntu-vps)
+
+
 ####j. Install git and setup the AdoptUsDogs application
 
 (i) Install git
@@ -331,9 +367,21 @@ Enter database server as postgres user and create new user named *catalog*
 
 Create an *.htaccess* file with the following code `RedirectMatch 404 /\.git`
 
-(iv) Modify app files and settings
+(iv) Modify application files and settings
 
 Ensure that *runserver.py* file becomes working *puppies.wsgi* in addition to */puppies/\_\_init.py\_\_* file
+Change database engine in *views.py*, *puppies_setup.py* and *puppypopulator.py* files so that user *catalog* has access.
+
+>`engine = create_engine('postgresql://catalog:puppies@localhost/puppyshelter')`
+
+Run the *puppies_setup.py* file to create the database architecture.
+
+>`python puppies_setup.py`
+
+Run the *puppypopulator.py* file to fill the database.
+
+>`python puppypopulator.py`
+
 
 (v) Ensure functional third-party authentication
 
@@ -356,13 +404,20 @@ Full login functions when deploying the application required changes to code inc
     h = httplib2.Http()
  ```
 
+Sources:
+[Stackoverflow - render .git directory inaccessible](http://stackoverflow.com/questions/6142437/make-git-directory-web-inaccessible)
+[Steuken, LinuxServerCOnfiguration from GitHub](https://github.com/stueken/FSND-P5_Linux-Server-Configuration)
+
+
 ### Known issues
 
 The use of Postgresql has a known issue - inability to have a table named *User* without expressly using quotation marks at every occurrence. The AdoptUsDogs application was therefore re-coded to implement a table *Client* instead of User when manipulating data.
 
+Sources:
+[Stackoverflow - postgresql/user table](http://stackoverflow.com/questions/22256124/cannot-create-a-database-table-named-user-in-postgresql)
 
-This application is coded in python and uses the frAdd postgre user with password:
-Sources: Trackets Blog and Super Useameworks Flask, 
+
+This application is coded in python and uses the frameworks Flask, 
 http://flask.pocoo.org/, and the extensions FlaskWTF, 
 https://flask-wtf.readthedocs.org/en/latest/, and WTForms, 
 https://wtforms.readthedocs.org/en/latest/.
