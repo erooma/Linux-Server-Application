@@ -2,8 +2,11 @@
 Linux Server Configuration and Deployment of AdoptUsDogs
 
 IP address: 52.37.92.217
+
 SSH port: 2200
+
 Web address: http://ec2-52-37-92-217.us-west-2.compute.amazonaws.com
+
 
 15/03/2016 Andrew Moore
 
